@@ -37,21 +37,21 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os pedidos.")
     public ResponseEntity<?> getOrders() {
         try {
-            return ResponseEntity.ok().body(orderService.getOrdersService());
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersService(), HttpStatus.OK, PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
     @GetMapping("/{ownerId}")
     @ApiOperation(value = "Método para buscar todos os pedidos de um cliente.")
-    public ResponseEntity<?> getOrdersByOwner(@PathVariable String ownerId) {
+    public ResponseEntity<?> getOrdersByOwner(@PathVariable UUID ownerId) {
         try {
-            return ResponseEntity.ok().body("teste");
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersByOwner(ownerId), PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
@@ -62,7 +62,7 @@ public class OrderController {
             return ResponseEntity.ok().body("teste");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
@@ -73,7 +73,7 @@ public class OrderController {
             return ResponseEntity.ok().body("teste");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
@@ -84,7 +84,7 @@ public class OrderController {
             return ResponseEntity.ok().body("teste");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
@@ -95,7 +95,7 @@ public class OrderController {
             return ResponseEntity.ok().body(order);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 
@@ -106,7 +106,7 @@ public class OrderController {
             return ResponseEntity.ok().body(body);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
         }
     }
 }
