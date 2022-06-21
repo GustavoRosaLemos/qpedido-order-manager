@@ -1,12 +1,9 @@
 package br.com.qpedido.order.manager.order;
 
-import br.com.qpedido.order.manager.model.TableModel;
 import br.com.qpedido.order.manager.repository.TableRepository;
 import br.com.qpedido.order.manager.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +45,10 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os pedidos de um cliente.")
     public ResponseEntity<?> getOrdersByOwner(@PathVariable UUID ownerId) {
         try {
-            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersByOwner(ownerId), PATH);
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersByOwnerService(ownerId), PATH+"/{categoryId}");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{categoryId}");
         }
     }
 
@@ -59,7 +56,7 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os itens disponíveis.")
     private ResponseEntity<?> getItems() {
         try {
-            return ResponseEntity.ok().body("teste");
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getItemsService(), PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
             return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
@@ -73,7 +70,7 @@ public class OrderController {
             return ResponseEntity.ok().body("teste");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{categoryId}");
         }
     }
 
@@ -81,7 +78,7 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os itens de uma categoria.")
     private ResponseEntity<?> getCategories() {
         try {
-            return ResponseEntity.ok().body("teste");
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoriesService(), PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
             return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);

@@ -1,5 +1,7 @@
 package br.com.qpedido.order.manager.order;
 
+import br.com.qpedido.order.manager.model.CategoryModel;
+import br.com.qpedido.order.manager.model.ItemModel;
 import br.com.qpedido.order.manager.model.OrderModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +30,20 @@ public interface OrderRepresentation {
     @AllArgsConstructor
     class GetOrdersResponse {
         private List<OrderModel> orders;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class GetItemsResponse {
+        private List<ItemModel> items;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class GetCategoriesResponse {
+        private List<CategoryModel> categories;
     }
 
     @Data
