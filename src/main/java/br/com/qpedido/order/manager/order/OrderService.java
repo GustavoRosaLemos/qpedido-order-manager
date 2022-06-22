@@ -1,11 +1,13 @@
 package br.com.qpedido.order.manager.order;
 
+import br.com.qpedido.order.manager.model.OrderModel;
 import br.com.qpedido.order.manager.repository.CategoryRepository;
 import br.com.qpedido.order.manager.repository.ItemRepository;
 import br.com.qpedido.order.manager.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -18,6 +20,7 @@ public class OrderService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
 
     public OrderRepresentation.GetOrdersResponse getOrdersService() {
         OrderRepresentation.GetOrdersResponse response = new OrderRepresentation.GetOrdersResponse();
@@ -41,5 +44,16 @@ public class OrderService {
         OrderRepresentation.GetCategoriesResponse response = new OrderRepresentation.GetCategoriesResponse();
         response.setCategories(categoryRepository.findAll());
         return response;
+    }
+
+    public OrderModel createOrderService(OrderRepresentation.OrderPostRequestBody order) {
+        OrderModel orderModel = new OrderModel();
+        orderModel.setIdTable(order.getIdTable());
+        orderModel.setStatus(OrderStatus.CREATED.toString());
+        orderModel.setNumber(order.getTableNumber());
+        orderModel.setOwnerId(order.getOwnerId());
+        orderModel.setUpdatedAt(LocalDateTime.now());
+        orderModel.setCreatedAt(LocalDateTime.now());
+        return orderRepository.save(orderModel);
     }
 }

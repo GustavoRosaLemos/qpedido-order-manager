@@ -89,7 +89,7 @@ public class OrderController {
     @ApiOperation(value = "Método para criar um novo pedido.")
     public ResponseEntity<?> postOrder(@RequestBody @Valid OrderRepresentation.OrderPostRequestBody order) {
         try {
-            return ResponseEntity.ok().body(order);
+            return Util.responseEntity("Novo pedido criado com sucesso!", orderService.createOrderService(order), PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
             return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);

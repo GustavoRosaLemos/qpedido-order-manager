@@ -16,10 +16,12 @@ public interface OrderRepresentation {
     @Data
     @NoArgsConstructor
     class OrderPostRequestBody {
+        @NotNull(message = "O campo idTable é obrigatório")
+        private UUID idTable;
         @NotNull(message = "O campo owner é o obrigatório.")
-        private UUID owner;
+        private UUID ownerId;
         @NotNull(message = "O campo tableNumber é o obrigatório.")
-        private int tableNumber;
+        private String tableNumber;
         @NotNull
         private OrderItems[] items;
     }
