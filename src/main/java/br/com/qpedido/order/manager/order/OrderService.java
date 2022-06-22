@@ -1,5 +1,7 @@
 package br.com.qpedido.order.manager.order;
 
+import br.com.qpedido.order.manager.exceptions.DatabaseException;
+import br.com.qpedido.order.manager.model.ItemModel;
 import br.com.qpedido.order.manager.model.OrderModel;
 import br.com.qpedido.order.manager.repository.CategoryRepository;
 import br.com.qpedido.order.manager.repository.ItemRepository;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -55,5 +58,21 @@ public class OrderService {
         orderModel.setUpdatedAt(LocalDateTime.now());
         orderModel.setCreatedAt(LocalDateTime.now());
         return orderRepository.save(orderModel);
+    }
+
+    public List<ItemModel> getCategoryItemsService(UUID idCategory) {
+        return itemRepository.getCategoryItems(idCategory);
+    }
+
+    public OrderModel updateOrderStatusService(UUID orderId, OrderStatus status) throws DatabaseException {
+        OrderModel order = orderRepository.findByOrderId(orderId);
+
+        if (order == null) {
+            throw new DatabaseException("O pedido não existe.");
+        }
+
+        order.setStatus(status.toString());
+        orderRepository.save(order);
+        return order;
     }
 }

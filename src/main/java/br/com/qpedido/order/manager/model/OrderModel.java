@@ -18,7 +18,7 @@ public class OrderModel {
     @Column(nullable = false, name = "id_table")
     private UUID idTable;
 
-    @Column
+    @Column(name = "status")
     private String status;
 
     @Column(nullable = false)

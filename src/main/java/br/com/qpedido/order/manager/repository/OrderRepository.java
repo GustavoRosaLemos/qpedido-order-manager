@@ -12,4 +12,7 @@ public interface OrderRepository extends JpaRepository<OrderModel, UUID> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM qpedido.order WHERE owner_id = :ownerId")
     List<OrderModel> findByOwnerId(@Param("ownerId") UUID ownerId);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM qpedido.order WHERE id_order = :idOrder")
+    OrderModel findByOrderId(@Param("idOrder") UUID idOrder);
 }

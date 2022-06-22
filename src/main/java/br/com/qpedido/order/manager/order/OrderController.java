@@ -45,10 +45,10 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os pedidos de um cliente.")
     public ResponseEntity<?> getOrdersByOwner(@PathVariable UUID ownerId) {
         try {
-            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersByOwnerService(ownerId), PATH+"/{categoryId}");
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getOrdersByOwnerService(ownerId), PATH+"/{ownerId}");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{categoryId}");
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{ownerId}");
         }
     }
 
@@ -56,21 +56,23 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os itens disponíveis.")
     private ResponseEntity<?> getItems() {
         try {
-            return Util.responseEntity("Busca realizada com sucesso!", orderService.getItemsService(), PATH);
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getItemsService(), PATH+"/items");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/items");
         }
     }
 
-    @GetMapping("/items/{categoryId}")
+    @GetMapping("/items/{idCategory}")
     @ApiOperation(value = "Método para buscar todos os itens de uma categoria.")
-    private ResponseEntity<?> getCategoryItems(@PathVariable UUID categoryId) {
+    private ResponseEntity<?> getCategoryItems(@PathVariable UUID idCategory) {
         try {
-            return ResponseEntity.ok().body("teste");
+            System.out.println("teste");
+            System.out.println(idCategory);
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoryItemsService(idCategory), PATH+"/items/{idCategory}");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{categoryId}");
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/items/{idCategory}");
         }
     }
 
@@ -78,10 +80,10 @@ public class OrderController {
     @ApiOperation(value = "Método para buscar todos os itens de uma categoria.")
     private ResponseEntity<?> getCategories() {
         try {
-            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoriesService(), PATH);
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoriesService(), PATH+"/categories");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/categories");
         }
     }
 
@@ -100,10 +102,10 @@ public class OrderController {
     @ApiOperation(value = "Método para modificar o status de um pedido.")
     public ResponseEntity<?> patchOrderStatus(@PathVariable("orderId") UUID orderId, @RequestBody @Valid OrderRepresentation.OrderPatchRequestBody body) {
         try {
-            return ResponseEntity.ok().body(body);
+            return Util.responseEntity("Status do pedido modificado com sucesso!", orderService.updateOrderStatusService(orderId, body.getOrderStatus()), PATH);
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
-            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH);
+            return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/{orderId}");
         }
     }
 }
