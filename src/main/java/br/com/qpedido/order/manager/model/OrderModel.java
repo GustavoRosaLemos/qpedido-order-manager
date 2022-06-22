@@ -13,12 +13,12 @@ import java.util.UUID;
 public class OrderModel {
     @Id @GeneratedValue
     @Column(name = "id_order")
-    private String idOrder;
+    private UUID idOrder;
 
     @Column(nullable = false, name = "id_table")
     private UUID idTable;
 
-    @Column
+    @Column(name = "status")
     private String status;
 
     @Column(nullable = false)
