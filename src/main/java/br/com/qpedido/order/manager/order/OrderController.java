@@ -19,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/order")
 @Api("API rest para gestão de pedidos.")
+@CrossOrigin
 public class OrderController {
 
     @Autowired
@@ -63,13 +64,11 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/items/{idCategory}")
+    @GetMapping("/items/{categoryId}")
     @ApiOperation(value = "Método para buscar todos os itens de uma categoria.")
-    private ResponseEntity<?> getCategoryItems(@PathVariable UUID idCategory) {
+    private ResponseEntity<?> getCategoryItems(@PathVariable UUID categoryId) {
         try {
-            System.out.println("teste");
-            System.out.println(idCategory);
-            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoryItemsService(idCategory), PATH+"/items/{idCategory}");
+            return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoryItemsService(categoryId), PATH+"/items/{idCategory}");
         } catch (Exception e) {
             LOGGER.error("Houve um erro inesperado. Mensagem: {}", e.getMessage());
             return Util.responseErrorEntity(e, HttpStatus.EXPECTATION_FAILED, PATH+"/items/{idCategory}");
@@ -77,7 +76,7 @@ public class OrderController {
     }
 
     @GetMapping("/categories")
-    @ApiOperation(value = "Método para buscar todos os itens de uma categoria.")
+    @ApiOperation(value = "Método para buscar todas as categorias.")
     private ResponseEntity<?> getCategories() {
         try {
             return Util.responseEntity("Busca realizada com sucesso!", orderService.getCategoriesService(), PATH+"/categories");
